@@ -1,3 +1,10 @@
+<?php
+include_once 'includes/db_connect.php';
+include_once 'includes/functions.php';
+ 
+sec_session_start();
+?>
+
 <!DOCTYPE html>
 <!--[if lt IE 9 ]><html class="no-js oldie" lang="en"> <![endif]-->
 <!--[if IE 9 ]><html class="no-js oldie ie9" lang="en"> <![endif]-->
@@ -38,45 +45,16 @@
 </head>
 
 <body id="top">
-
+     <?php if (login_check($mysqli) == true) : ?>
     <!-- header
     ================================================== -->
-    <header class="s-header">
+   <!-- <header class="s-header">
 
         <div class="header-logo">
-            <a class="site-logo" href="index.html">
+            <a class="site-logo" href="index.php">
                 <img src="images/logga_liten.png" alt="Homepage">
             </a>
-        </div>
-
-        
-
-
-
-        <div id="loginwindow">
-        <form align="center" method="post" action="login.php" >
-             <?php include('errors.php'); ?>
-             <div>
-            <label>Användarnamn</label><br>
-                
-                <input name="username" class="full-width" type="email" placeholder="test@mailbox.com" id="sampleInput" required>
-            </div>       
-         
-            <div> 
-            <label>Lösenord</label><br>
-                
-                <input name="password" required class="full-width" type="password" placeholder="password" id="sampleInput">
-            </div>         
-           
-            <div>
-                <button  type="submit" name="login" class="knappjao">Logga In</button>
-            </div>
-            <p>Har du inte ett konto? <a href="register.php">Registrera dig</a></p>
-              
-           
-        </form>
-        </div>
-
+        </div> 
     </header> <!-- end s-header -->
 
 
@@ -86,23 +64,36 @@
     -->
     <section id="home" class="s-home target-section" data-parallax="scroll" data-image-src="http://blog.visme.co/wp-content/uploads/2017/07/50-Beautiful-and-Minimalist-Presentation-Backgrounds-030.jpg" data-natural-width=3000 data-natural-height=2000 data-position-y=center>
 
+        <form>
             
+            <input type="text" name="desc" value="<?php
+           
+            try{
+                $query = "SELECT * FROM `description`";
+                $result = $mysqli->query($query);                
+                while($row = $result->fetch_assoc()) {  
+                 echo $row["description"];
+                }
+            }
+            catch(PDOException $e){
+                echo "Connection Falied: ".$e ->getMessage();
+            }
+
+            ?>">
+
+            <input type="submit" name="submitdesc" value="Spara">
+        </form>
+
+        
 
 
        
-
+ 
     </section> <!-- end s-home -->
+    <a href="includes/logout.php">Log out</a>
 
 
    
-
-   
-
-    </footer> <!-- end footer -->
-
-
-
-
     <!-- preloader
     ================================================== -->
     <div id="preloader">
@@ -123,6 +114,12 @@
     <script src="js/jquery-3.2.1.min.js"></script>
     <script src="js/plugins.js"></script>
     <script src="js/main.js"></script>
+
+      <?php else : ?>
+            <p>
+                <span class="error">You are not authorized to access this page.</span> Please <a href="adminlogin.php">login</a>.
+            </p>
+        <?php endif; ?>
 
 </body>
 

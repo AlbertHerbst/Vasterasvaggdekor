@@ -4,7 +4,12 @@
 <!--[if (gte IE 9)|!(IE)]><!-->
 <html class="no-js" lang="en">
 <!--<![endif]-->
-
+<?php
+                $servername = "localhost";
+                $username = "readonly";
+                $password = "";
+                $database = "secure_login";
+?>
 <head>
 
     <!--- basic page needs
@@ -69,19 +74,10 @@
                 <ul class="header-nav__social">
                     <li>
                         <a href="https://www.facebook.com/V%C3%A4ster%C3%A5s-V%C3%A4ggdekor-1605809676128925/"><i class="fa fa-facebook"></i></a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-twitter"></i></a>
-                    </li>
+                    </li>                    
                     <li>
                         <a href="https://www.instagram.com/vasteras_vaggdekor/"><i class="fa fa-instagram"></i></a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-behance"></i></a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-dribbble"></i></a>
-                    </li>
+                    </li>                   
                 </ul>
 
             </div> <!-- end header-nav__content -->
@@ -143,19 +139,10 @@
         <ul class="home-social">
             <li>
                 <a href="https://www.facebook.com/V%C3%A4ster%C3%A5s-V%C3%A4ggdekor-1605809676128925/"><i class="fa fa-facebook" aria-hidden="true"></i><span>Facebook</span></a>
-            </li>
-            <li>
-                <a href="#0"><i class="fa fa-twitter" aria-hidden="true"></i><span>Twitter</span></a>
-            </li>
+            </li>            
             <li>
                 <a href="https://www.instagram.com/vasteras_vaggdekor/"><i class="fa fa-instagram" aria-hidden="true"></i><span>Instagram</span></a>
-            </li>
-            <li>
-                <a href="#0"><i class="fa fa-behance" aria-hidden="true"></i><span>Behance</span></a>
-            </li>
-            <li>
-                <a href="#0"><i class="fa fa-dribbble" aria-hidden="true"></i><span>Dribbble</span></a>
-            </li>
+            </li>            
         </ul> 
         <!-- end home-social -->
 
@@ -167,9 +154,7 @@
     <section id='about' class="s-about">
 
         <div class="row section-header has-bottom-sep" data-aos="fade-up">
-            <div class="col-full">
-                <h3 class="subhead subhead--dark">Hallå!</h3>
-                <br>
+            <div class="col-full">             
                 <h1 class="display-1 display-1--light">Vi Är <br>Västerås Väggdekor</h1>
             </div>
         </div> <!-- end section-header -->
@@ -177,12 +162,45 @@
         <div class="row about-desc" data-aos="fade-up">
             <div class="col-full">
                 <p>
-                Västerås Väggdekor erbjuder handmålade väggmotiv i såväl liten som stor skala, inomhus likväl som utomhus. Med en bakgrund i graffitikulturern har vi under devennier applicerat frg på väggar för såväl privatpersoner som företag, skolor och museum.<br>
+                Västerås Väggdekor erbjuder handmålade väggmotiv i såväl liten som stor skala, inomhus likväl som utomhus. Med en bakgrund i graffitikulturern har vi under devennier applicerat färg på väggar för såväl privatpersoner som företag, skolor och museum.<br>
                 <br>
                 Vi tycker inte att snabba lösningar i form av tryckta banderoller eller liknande traditionella uttryck känns särskilt fräscht som produkt. Av den anledningen och för att vi själva inte kan sätta vår egen passion åt sidan, utgår vi alltid för kundens idé men landar oftast i ett slutresultat som överträggar kundens förväntningar.<br>
                 <br>
                 Long story short: Hör gärna av dig till oss med din idé!
                 </p>
+
+                <?php
+
+                
+
+
+                try{
+
+                    $conn = new PDO("mysql:host=$servername;dbname=$database",$username, $password);
+                    $conn -> setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+                    echo " [Connection Successfull] ";
+
+                    $stmt = $conn ->prepare("SELECT description FROM description");
+                    
+                    $stmt -> execute();
+
+                    $result = $stmt -> setFetchMode(PDO::FETCH_ASSOC);
+
+                    foreach ($stmt -> fetchALL() as $k) {
+
+                        echo "<p>".$k['description']."</p>";
+                        
+                    }
+                    }
+
+                    catch(PDOException $e){
+                        echo "Connection Falied: ".$e ->getMessage();
+                    }
+
+                    $conn = null;
+
+                ?>
+
 
                 <a href="#contact" class="smoothscroll btn btn--stroke">
                         Kontakta oss
@@ -193,81 +211,7 @@
 
         <div class="about__line"></div>
 
-    </section> <!-- end s-about -->
-
-
-    <!-- services
-    ================================================== -->
-    <section id='services' class="s-services">
-
-        <div class="row section-header has-bottom-sep" data-aos="fade-up">
-            <div class="col-full">
-                <h3 class="subhead">Vad arbetar vi med?</h3>
-                <h1 class="display-2">Vi kan utföra många olika typer av målningar, stora som små.</h1>
-            </div>
-        </div> <!-- end section-header -->
-
-        <div class="row services-list block-1-2 block-tab-full">
-
-            <div class="col-block service-item" data-aos="fade-up">
-                <div class="service-icon">
-                    <i class="icon-paint-brush"></i>
-                </div>
-                <div class="service-text">
-                    <h3 class="h2">Väggmålning 1</h3>
-                    <p>Nemo cupiditate ab quibusdam quaerat impedit magni. Earum suscipit ipsum laudantium. 
-                    Quo delectus est. Maiores voluptas ab sit natus veritatis ut. Debitis nulla cumque veritatis.
-                    Sunt suscipit voluptas ipsa in tempora esse soluta sint.
-                    </p>
-                </div>
-            </div>
-
-            <div class="col-block service-item" data-aos="fade-up">
-                <div class="service-icon">
-                    <i class="icon-paint-brush"></i>
-                </div>
-                <div class="service-text">
-                    <h3 class="h2">Väggmålning 2</h3>
-                    <p>Nemo cupiditate ab quibusdam quaerat impedit magni. Earum suscipit ipsum laudantium. 
-                    Quo delectus est. Maiores voluptas ab sit natus veritatis ut. Debitis nulla cumque veritatis.
-                    Sunt suscipit voluptas ipsa in tempora esse soluta sint.
-                    </p>
-                </div>
-            </div>
-
-            <div class="col-block service-item" data-aos="fade-up">
-                <div class="service-icon">
-                    <i class="icon-paint-brush"></i>
-                </div>
-                <div class="service-text">
-                    <h3 class="h2">Väggmålning 3</h3>
-                    <p>Nemo cupiditate ab quibusdam quaerat impedit magni. Earum suscipit ipsum laudantium. 
-                    Quo delectus est. Maiores voluptas ab sit natus veritatis ut. Debitis nulla cumque veritatis.
-                    Sunt suscipit voluptas ipsa in tempora esse soluta sint.
-                    </p>
-                </div>
-            </div>
-
-            <div class="col-block service-item" data-aos="fade-up">
-                <div class="service-icon">
-                    <i class="icon-paint-brush"></i>
-                </div>
-                <div class="service-text">
-                    <h3 class="h2">Väggmålning 4</h3>
-                    <p>Nemo cupiditate ab quibusdam quaerat impedit magni. Earum suscipit ipsum laudantium. 
-                    Quo delectus est. Maiores voluptas ab sit natus veritatis ut. Debitis nulla cumque veritatis.
-                    Sunt suscipit voluptas ipsa in tempora esse soluta sint.
-                    </p>
-                </div>
-            </div>
-
-
-
-           
-
-        </div> <!-- end services-list -->
-
-    </section> <!-- end s-services -->
+    </section> <!-- end s-about -->  
 
 
     <!-- works
@@ -283,7 +227,7 @@
                 </div>
             </div> <!-- end section-header -->
 
-        </div> <!-- end intro-wrap -->
+         <!-- end intro-wrap -->
 
         <div class="row works-content">
             <div class="col-full masonry-wrap">
@@ -502,8 +446,82 @@
                 </div> <!-- end masonry -->
             </div> <!-- end col-full -->
         </div> <!-- end works-content -->
+        </div>
 
     </section> <!-- end s-works -->
+
+     <!-- services
+    ================================================== -->
+    <section id='services' class="s-services">
+
+        <div class="row section-header has-bottom-sep" data-aos="fade-up">
+            <div class="col-full">
+                <h3 class="subhead">Vad arbetar vi med?</h3>
+                <h1 class="display-2">Vi kan utföra många olika typer av målningar, stora som små.</h1>
+            </div>
+        </div> <!-- end section-header -->
+
+        <div class="row services-list block-1-2 block-tab-full">
+
+            <div class="col-block service-item" data-aos="fade-up">
+                <div class="service-icon">
+                    <i class="icon-paint-brush"></i>
+                </div>
+                <div class="service-text">
+                    <h3 class="h2">Väggmålning 1</h3>
+                    <p>Nemo cupiditate ab quibusdam quaerat impedit magni. Earum suscipit ipsum laudantium. 
+                    Quo delectus est. Maiores voluptas ab sit natus veritatis ut. Debitis nulla cumque veritatis.
+                    Sunt suscipit voluptas ipsa in tempora esse soluta sint.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-block service-item" data-aos="fade-up">
+                <div class="service-icon">
+                    <i class="icon-paint-brush"></i>
+                </div>
+                <div class="service-text">
+                    <h3 class="h2">Väggmålning 2</h3>
+                    <p>Nemo cupiditate ab quibusdam quaerat impedit magni. Earum suscipit ipsum laudantium. 
+                    Quo delectus est. Maiores voluptas ab sit natus veritatis ut. Debitis nulla cumque veritatis.
+                    Sunt suscipit voluptas ipsa in tempora esse soluta sint.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-block service-item" data-aos="fade-up">
+                <div class="service-icon">
+                    <i class="icon-paint-brush"></i>
+                </div>
+                <div class="service-text">
+                    <h3 class="h2">Väggmålning 3</h3>
+                    <p>Nemo cupiditate ab quibusdam quaerat impedit magni. Earum suscipit ipsum laudantium. 
+                    Quo delectus est. Maiores voluptas ab sit natus veritatis ut. Debitis nulla cumque veritatis.
+                    Sunt suscipit voluptas ipsa in tempora esse soluta sint.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-block service-item" data-aos="fade-up">
+                <div class="service-icon">
+                    <i class="icon-paint-brush"></i>
+                </div>
+                <div class="service-text">
+                    <h3 class="h2">Väggmålning 4</h3>
+                    <p>Nemo cupiditate ab quibusdam quaerat impedit magni. Earum suscipit ipsum laudantium. 
+                    Quo delectus est. Maiores voluptas ab sit natus veritatis ut. Debitis nulla cumque veritatis.
+                    Sunt suscipit voluptas ipsa in tempora esse soluta sint.
+                    </p>
+                </div>
+            </div>
+
+
+
+           
+
+        </div> <!-- end services-list -->
+
+    </section> <!-- end s-services -->
 
 
     <!-- clients
@@ -677,19 +695,10 @@
                     <ul class="contact-social">
                         <li>
                             <a href="https://www.facebook.com/V%C3%A4ster%C3%A5s-V%C3%A4ggdekor-1605809676128925/"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                        </li>
+                        </li>                       
                         <li>
                             <a href="https://www.instagram.com/vasteras_vaggdekor/"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-behance" aria-hidden="true"></i></a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-dribbble" aria-hidden="true"></i></a>
-                        </li>
+                        </li>                        
                     </ul> <!-- end contact-social -->
 
                 </div> <!-- end contact-info -->

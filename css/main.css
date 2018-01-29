@@ -872,13 +872,13 @@ input[type="button"].btn--primary:focus {
 
 .btn--stroke, button.btn--stroke {
     background: transparent !important;
-    border: 0.2rem solid #39b54a;
-    color: #39b54a;
+    border: 0.2rem solid #111111;
+    color: #111111;
 }
 
 .btn--stroke:hover, button.btn--stroke:hover {
-    border: 0.2rem solid #000000;
-    color: #000000;
+    border: 0.2rem solid #ffdd59;
+    color: #ffdd59;
 }
 
 .btn--pill, button.btn--pill {
@@ -1246,7 +1246,7 @@ button::-moz-focus-inner, input::-moz-focus-inner {
     line-height: 1.333;
     text-transform: uppercase;
     letter-spacing: .25rem;
-    color: #39b54a;
+    color: #ffd32a;
     margin-top: 0;
     margin-bottom: 0;
 }
@@ -1471,8 +1471,8 @@ button::-moz-focus-inner, input::-moz-focus-inner {
  * ## main navigation 
  * ------------------------------------------------------------------- */
 .header-nav {
-    background: #0C0C0C;
-    color: rgba(255, 255, 255, 0.25);
+    
+    background-color: rgba(5, 5, 5, 0.98);
     font-family: "montserrat-light", sans-serif;
     font-size: 1.3rem;
     line-height: 1.846;
@@ -1822,8 +1822,8 @@ button::-moz-focus-inner, input::-moz-focus-inner {
 
 .home-content__buttons .btn {
     width: 215px;
-    border-color: #FFFFFF;
-    color: #FFFFFF;
+    border-color: #ffd32a;
+    color: #ffd32a;
     margin: 1.5rem 1.5rem 0 0;
     letter-spacing: .25rem;
     -webkit-transition: all 0.5s ease-in-out;
@@ -1836,7 +1836,7 @@ button::-moz-focus-inner, input::-moz-focus-inner {
 
 .home-content__buttons .btn:hover, 
 .home-content__buttons .btn:focus {
-    background: #FFFFFF !important;
+    background: #ffd32a !important;
     color: #000000;
 }
 
@@ -2200,8 +2200,8 @@ html.no-csstransitions .home-content__main {
 .s-about {
     padding-top: 16.2rem;
     padding-bottom: 9rem;
-    background-color: #b1e7b9;
-    color: #010507;
+    background-color: #ffeaa7;
+    color: #111111;
     position: relative;
 }
 
@@ -2214,6 +2214,7 @@ html.no-csstransitions .home-content__main {
     line-height: 1.75;
     text-align: center;
     max-width: 1024px;
+    color: black;
 }
 
 
@@ -2933,7 +2934,7 @@ html.no-csstransitions .home-content__main {
  * ------------------------------------------------------------------- */
 .s-contact {
     background-color: #151515;
-    background-image: url("../images/contact-bg.jpg");
+    background-image: url("../images/portfolio/zlatan.jpg");
     background-repeat: no-repeat;
     background-position: center, center;
     padding-top: 15rem;
@@ -3137,7 +3138,7 @@ html.no-csstransitions .home-content__main {
 
 .contact-social li a:hover, 
 .contact-social li a:focus {
-    color: #39b54a;
+    color: #ffd32a;
 }
 
 .contact-social li:last-child {
