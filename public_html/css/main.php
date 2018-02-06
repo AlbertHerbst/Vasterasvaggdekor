@@ -1,3 +1,25 @@
+<?php
+    header("Content-type: text/css; charset: UTF-8");
+
+
+   
+    $colorcon = new mysqli("mysql690.loopia.se", "readonly@v187722", "onlyread", "vasterasvaggdekor_se_db_4");
+
+
+    $getcolor = mysqli_fetch_assoc(mysqli_query($colorcon, "SELECT hex FROM colors WHERE id = 'maincolor'"));
+    $maincolor = $getcolor['hex'];
+    $getcolor2 = mysqli_fetch_assoc(mysqli_query($colorcon, "SELECT hex FROM colors WHERE id = 'buttoncolorhover'"));
+    $buttoncolorhover = $getcolor2['hex'];"
+
+
+
+
+
+
+
+
+?>
+
 /* =================================================================== 
  *
  *  Glint v1.0 Main Stylesheet
@@ -74,7 +96,7 @@ html, body {
 }
 
 body {
-    background: #111111;
+    background: white;
     font-family: "lora-regular", serif;
     font-size: 1.7rem;
     font-style: normal;
@@ -877,8 +899,8 @@ input[type="button"].btn--primary:focus {
 }
 
 .btn--stroke:hover, button.btn--stroke:hover {
-    border: 0.2rem solid #ffdd59;
-    color: #ffdd59;
+    border: 0.2rem solid <?php echo $buttoncolorhover;?>;
+    color: <?php echo $buttoncolorhover;?>;
 }
 
 .btn--pill, button.btn--pill {
@@ -1651,7 +1673,7 @@ button::-moz-focus-inner, input::-moz-focus-inner {
     font-size: 1.3rem;
     text-transform: uppercase;
     letter-spacing: .3rem;
-    color: #39b54a;
+    color: <?php echo $maincolor;?>;
     -webkit-transition: all 0.5s ease-in-out;
     transition: all 0.5s ease-in-out;
 }
