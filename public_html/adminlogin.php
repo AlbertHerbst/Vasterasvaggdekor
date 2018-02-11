@@ -71,7 +71,7 @@ if (login_check($mysqli) == true) {
             echo '<p>Do you want to change user? <a href="includes/logout.php">Log out</a>.</p>';
         } else {
                         echo '<p>Currently logged ' . $logged . '.</p>';
-                        echo "<p>If you don't have a login, please <a href='register.php'>register</a></p>";
+                        
                 }
 ?>      
     </body>

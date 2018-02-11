@@ -1,22 +1,19 @@
 <?php
     header("Content-type: text/css; charset: UTF-8");
-
-
    
-    $colorcon = new mysqli("mysql690.loopia.se", "readonly@v187722", "onlyread", "vasterasvaggdekor_se_db_4");
+    $colorcon = new mysqli("mysql690.loopia.se", "readonly@v187722", "onlyread", "vasterasvaggdekor_se_db_4");  
 
 
     $getcolor = mysqli_fetch_assoc(mysqli_query($colorcon, "SELECT hex FROM colors WHERE id = 'maincolor'"));
     $maincolor = $getcolor['hex'];
+  
     $getcolor2 = mysqli_fetch_assoc(mysqli_query($colorcon, "SELECT hex FROM colors WHERE id = 'buttoncolorhover'"));
-    $buttoncolorhover = $getcolor2['hex'];"
+    $buttoncolorhover = $getcolor2['hex'];
 
-
-
-
-
-
-
+    $getcoloromoss = mysqli_fetch_assoc(mysqli_query($colorcon, "SELECT hex FROM colors WHERE id = 'omossbakgrund'"));
+    $omossbakgrund = $getcoloromoss['hex'];
+    
+    mysqli_close($colorcon);
 
 ?>
 
@@ -118,7 +115,7 @@ a {
 }
 
 a:hover, a:focus, a:active {
-    color: #39b54a;
+    color: <?php echo $maincolor;?>;
 }
 
 a:hover, a:active {
@@ -389,7 +386,7 @@ ul.disc li::before {
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: #39b54a;
+    background: <?php echo $maincolor;?>;
     position: absolute;
     left: -17px;
     top: 11px;
@@ -398,7 +395,7 @@ ul.disc li::before {
 
 dt {
     margin: 0;
-    color: #39b54a;
+    color: <?php echo $maincolor;?>;
 }
 
 dd {
@@ -524,7 +521,7 @@ form,
 }
 
 .pace .pace-progress {
-    background: #39b54a;
+    background: <?php echo $maincolor;?>;
     position: fixed;
     z-index: 900;
     top: 0;
@@ -567,7 +564,7 @@ form,
 }
 
 .line-scale-pulse-out > div {
-    background-color: #39b54a;
+    background-color: <?php echo $maincolor;?>;
     width: 4px;
     height: 35px;
     border-radius: 2px;
@@ -794,7 +791,7 @@ textarea:-webkit-autofill:hover textarea:-webkit-autofill:focus,
 select:-webkit-autofill,
 select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
-    -webkit-text-fill-color: #39b54a;
+    -webkit-text-fill-color: <?php echo $maincolor;?>;
     transition: background-color 5000s ease-in-out 0s;
 }
 
@@ -854,8 +851,8 @@ button.btn--primary,
 input[type="submit"].btn--primary,
 input[type="reset"].btn--primary,
 input[type="button"].btn--primary {
-    background: #39b54a;
-    border-color: #39b54a;
+    background: <?php echo $maincolor;?>;
+    border-color: <?php echo $maincolor;?>;
     color: #FFFFFF;
 }
 
@@ -1123,7 +1120,7 @@ button::-moz-focus-inner, input::-moz-focus-inner {
 }
 
 .stats-tabs li a:hover {
-    color: #39b54a;
+    color: <?php echo $maincolor;?>;
 }
 
 .stats-tabs li a em {
@@ -1268,7 +1265,7 @@ button::-moz-focus-inner, input::-moz-focus-inner {
     line-height: 1.333;
     text-transform: uppercase;
     letter-spacing: .25rem;
-    color: #ffd32a;
+    color: <?php echo $maincolor;?>;
     margin-top: 0;
     margin-bottom: 0;
 }
@@ -1442,7 +1439,7 @@ button::-moz-focus-inner, input::-moz-focus-inner {
 
 .slick-slider .slick-dots li.slick-active button,
 .slick-slider .slick-dots li:hover button {
-    background: #39b54a;
+    background: <?php echo $maincolor;?>;
 }
 
 
@@ -1535,7 +1532,7 @@ button::-moz-focus-inner, input::-moz-focus-inner {
     letter-spacing: .25rem;
     margin-bottom: 4.8rem;
     margin-top: .9rem;
-    color: #39b54a;
+    color: <?php echo $maincolor;?>;
 }
 
 .header-nav p {
@@ -1881,8 +1878,8 @@ button::-moz-focus-inner, input::-moz-focus-inner {
 }
 
 .home-content__scroll a::before {
-    border-bottom: 2px solid #39b54a;
-    border-right: 2px solid #39b54a;
+    border-bottom: 2px solid <?php echo $maincolor;?>;
+    border-right: 2px solid <?php echo $maincolor;?>;
     content: '';
     display: block;
     height: 8px;
@@ -1906,7 +1903,7 @@ button::-moz-focus-inner, input::-moz-focus-inner {
     display: block;
     width: 2px;
     height: 10.2rem;
-    background-color: #39b54a;
+    background-color: <?php echo $maincolor;?>;
     position: absolute;
     right: 7.2rem;
     bottom: 0;
@@ -1966,7 +1963,7 @@ button::-moz-focus-inner, input::-moz-focus-inner {
 }
 
 .home-social span {
-    color: #39b54a;
+    color: <?php echo $maincolor;?>;
     right: 4.5rem;
     font-size: 1.3rem;
     opacity: 0;
@@ -2222,7 +2219,7 @@ html.no-csstransitions .home-content__main {
 .s-about {
     padding-top: 16.2rem;
     padding-bottom: 9rem;
-    background-color: #ffeaa7;
+    background-color: <?php echo $omossbakgrund?>;
     color: #111111;
     position: relative;
 }
@@ -2428,7 +2425,7 @@ html.no-csstransitions .home-content__main {
 
 .services-list .service-icon {
     float: left;
-    color: #39b54a;
+    color: <?php echo $maincolor;?>;
     font-size: 4.8rem;
     margin-top: -.6rem;
 }
@@ -2997,7 +2994,7 @@ html.no-csstransitions .home-content__main {
     padding: 0 2rem;
     margin: 0;
     color: #FFFFFF;
-    background: #39b54a;
+    background: <?php echo $maincolor;?>;
 }
 
 .s-contact .form-field label::after {
@@ -3008,14 +3005,14 @@ html.no-csstransitions .home-content__main {
     margin-top: -6px;
     border-top: 5px solid transparent;
     border-bottom: 5px solid transparent;
-    border-right: 5px solid #39b54a;
+    border-right: 5px solid <?php echo $maincolor;?>;
 }
 
 .contact__line {
     display: block;
     width: 2px;
     height: 20.4rem;
-    background-color: #39b54a;
+    background-color: <?php echo $maincolor;?>;
     position: absolute;
     left: 50%;
     top: -10.2rem;
@@ -3042,7 +3039,7 @@ html.no-csstransitions .home-content__main {
 
 .contact-content h5 {
     margin-top: 0;
-    color: #39b54a;
+    color: <?php echo $maincolor;?>;
 }
 
 .contact-content input[type="email"],
@@ -3069,7 +3066,7 @@ html.no-csstransitions .home-content__main {
 .contact-content textarea:focus,
 .contact-content select:focus {
     color: #FFFFFF;
-    border-bottom: 1px solid #39b54a;
+    border-bottom: 1px solid <?php echo $maincolor;?>;
 }
 
 .contact-content button,
@@ -3183,7 +3180,7 @@ html.no-csstransitions .home-content__main {
 }
 
 .message-success {
-    color: #39b54a;
+    color: <?php echo $maincolor;?>;
 }
 
 .message-warning i, .message-success i {
@@ -3375,7 +3372,7 @@ footer a {
 }
 
 footer a:hover, footer a:focus, footer a:active {
-    color: #39b54a;
+    color: <?php echo $maincolor;?>;
 }
 
 footer .row {
@@ -3467,8 +3464,8 @@ footer .row {
     top: 0;
     right: 0;
     color: #FFFFFF;
-    background: #39b54a;
-    border-color: #39b54a;
+    background: <?php echo $maincolor;?>;
+    border-color: <?php echo $maincolor;?>;
     padding: 0 20px;
 }
 

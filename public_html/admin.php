@@ -1,11 +1,7 @@
 <?php
 include_once '../private/includes/db_connect.php';
 include_once '../private/includes/functions.php';
-$mysqlitext = new mysqli("mysql690.loopia.se", "readonly@v187679", "onlyread", "vasterasvaggdekor_se_db_2");
-$mysqliprojekt = new mysqli("mysql690.loopia.se", "projadmi@v187678", "rndmprojadmi", "vasterasvaggdekor_se_db_1");
-mysqli_set_charset($mysqlitext, 'utf8');
-mysqli_set_charset($mysqliprojekt, 'utf8');
- 
+
 sec_session_start();
 ?>
 
@@ -51,34 +47,71 @@ sec_session_start();
 
 <body>
      <?php if (login_check($mysqli) == true) : ?>
+        <?php $mysqlitext = new mysqli("mysql690.loopia.se", "readonly@v187679", "onlyread", "vasterasvaggdekor_se_db_2");
+$mysqliprojekt = new mysqli("mysql690.loopia.se", "projadmi@v187678", "rndmprojadmi", "vasterasvaggdekor_se_db_1");
+$colorcon = mysqli_connect("mysql690.loopia.se", "readonly@v187722", "onlyread", "vasterasvaggdekor_se_db_4");  
+mysqli_set_charset($mysqlitext, 'utf8');
+mysqli_set_charset($mysqliprojekt, 'utf8');
+mysqli_set_charset($colorcon, 'utf8');
+
+$getcolor = mysqli_fetch_assoc(mysqli_query($colorcon, "SELECT hex FROM colors WHERE id = 'maincolor'"));
+$maincolor = $getcolor['hex'];
+
+$getcolor2 = mysqli_fetch_assoc(mysqli_query($colorcon, "SELECT hex FROM colors WHERE id = 'buttoncolorhover'"));
+$buttoncolorhover = $getcolor2['hex'];
+
+$getcolor3 = mysqli_fetch_assoc(mysqli_query($colorcon, "SELECT hex FROM colors WHERE id = 'omossbakgrund'"));
+$omossbakgrund = $getcolor3['hex'];
+
+
+
+
+mysqli_close($colorcon);
+?>
     <!-- header
+
    
     ================================================== 
     BAKGRUNDSBILD = data-image-src
     -->
-    <section id='services' class="s-services">
+    <section >
     <div class="row">
         <div class="col-six tab-full">
             <form method="post" action="update.php">
            
-                            <h3>Texten som ligger under rubriken "Om Oss"</h3>
+                            <h3>Om Oss</h3>
                             <textarea name="omoss" class="full-width" type="text" id="desc"><?php     
-                            try{
+                            
                                
                                 $query = "SELECT * FROM textinfo WHERE id = 'omoss'";
                                 $result = $mysqlitext->query($query);                
                                 while($row = $result->fetch_assoc()) {  
                                  echo $row["textvalue"];
                                 }
-                            }
-                            catch(PDOException $e){
-                                echo "Connection Falied: ".$e ->getMessage();
-                            }
+                            
+                            
                             ?></textarea>
 
-                            
-            
-            
+                           
+                                <?php
+                                echo '<label>Bakgrundfärg</label>
+                                <input id="omosscoltext" onchange="updateomosscol()" type="text" value="'.$omossbakgrund.'">
+                                <input id="omosscolcol" onchange="updateomosstext()" type="color"  name="omossbakgrund" value="'.$omossbakgrund.'">';
+                                ?>     
+
+                                <script type="text/javascript">
+                                    function updateomosstext(){
+
+                                    document.getElementById("omosscoltext").value = document.getElementById("omosscolcol").value;
+                                    }
+
+                                    function updateomosscol(){
+
+                                    document.getElementById("omosscolcol").value = document.getElementById("omosscoltext").value;
+                                    }
+
+                                </script>                      
+                           
 
             <input type="submit" name="submitdesc" value="Spara">
         </form>
@@ -94,7 +127,7 @@ sec_session_start();
                     <textarea class="full-width" name="huvudtext" placeholder="Den här texten syns när användaren klickar på bilden.."></textarea>
                     <label>Välj Projektbild</label>                
                     <input type="file" name="file">
-                    <button type="submit" name="submit"> UPLOAD </button>
+                    <button type="submit" name="submit"> Ladda Upp </button>
                 </form>
 
             </div>
@@ -103,9 +136,54 @@ sec_session_start();
 
     <div class="row">
         <div class="col-six tab-full">
-            <form>
-                <input type="color" class="full-width" value="#aacbff" name="">
+            <h3>Färger</h3>
+            <form method="POST" action="updatecolor.php">
+                
+                
+               
+                 <?php 
+                 echo '
+                 <label>Main Color:</label>
+                 <input id="coltext" onchange="updatecolcol()" type="text" value="'.$maincolor.'"> <input id="colcol" onchange="updatecoltext()" type="color"  name="maincolor" value="'.$maincolor.'">
+                 
+
+                 <label>Button Color Hover:</label>
+                 <input id="hovercoltext" onchange="updatehovercol()" type="text" value="'.$buttoncolorhover.'">
+                 <input id="hovercolcol" onchange="updatehovertext()" type="color"  name="buttoncolorhover" value="'.$buttoncolorhover.'">
+                 ';
+
+
+
+                 ?>
+                 <script type="text/javascript">
+
+                    function updatecoltext(){
+
+                    document.getElementById("coltext").value = document.getElementById("colcol").value;
+                    }
+
+                    function updatecolcol(){
+
+                    document.getElementById("colcol").value = document.getElementById("coltext").value;
+                    }
+
+                    function updatehovertext(){
+
+                    document.getElementById("hovercoltext").value = document.getElementById("hovercolcol").value;
+                    }
+
+                    function updatehovercol(){
+
+                    document.getElementById("hovercolcol").value = document.getElementById("hovercoltext").value;
+                    }
+
+
+            </script>
+
+
+                <button type="submit"> Spara Färger </button>
             </form>
+            
         </div>
 
     </div> <!--end row-->
