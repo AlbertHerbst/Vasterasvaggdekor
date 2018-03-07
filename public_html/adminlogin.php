@@ -35,6 +35,7 @@ if (login_check($mysqli) == true) {
         <link rel="stylesheet" href="css/base.css">
         <link rel="stylesheet" href="css/vendor.css">
         <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/admin.css">
 
         <!-- script
         ================================================== -->
@@ -54,17 +55,17 @@ if (login_check($mysqli) == true) {
             echo '<p class="error">Error Logging In!</p>';
         }
         ?> 
-        <form action="includes/process_login.php" method="post" name="login_form">                      
-            Email: <input class="full-width" type="text" name="email" />
-            Password: <input class="full-width" type="password" 
-                             name="password" 
-                             id="password"/>
-            <input type="button" 
-                   value="Login" 
-                   onclick="formhash(this.form, this.form.password);" /> 
-        </form>
- 
-<?php
+        <div id="loginwindow">
+            <form action="includes/process_login.php" method="post" name="login_form">                      
+                Email: <input class="full-width" type="text" name="email" />
+                Password: <input class="full-width" type="password" 
+                                 name="password" 
+                                 id="password"/>
+                <input type="button" 
+                       value="Login" 
+                       onclick="formhash(this.form, this.form.password);" /> 
+            </form>
+            <?php
         if (login_check($mysqli) == true) {
                         echo '<p>Currently logged ' . $logged . ' as ' . htmlentities($_SESSION['username']) . '.</p>';
  
@@ -73,6 +74,8 @@ if (login_check($mysqli) == true) {
                         echo '<p>Currently logged ' . $logged . '.</p>';
                         
                 }
-?>      
+?> 
+        </div>
+     
     </body>
 </html>

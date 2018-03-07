@@ -14,6 +14,12 @@ sec_session_start();
 <?php
 if (isset($_POST['submit'])) {
 $id = $_POST['id'];
+
+$getid = mysqli_fetch_assoc(mysqli_query($mysqlitext, "SELECT 'imgpath' FROM 'projekt' WHERE 'id' = '$id'"));
+$imgpath = $getid['imgpath'];
+
+unlink($imgpath);
+
 $query = "DELETE FROM `projekt` WHERE `id` = $id";
 $mysqlitext->query($query);
 header("Location: admin.php");

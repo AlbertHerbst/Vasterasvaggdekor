@@ -29,7 +29,7 @@ if (isset($_POST['submit'])) {
 $fileExt = explode('.', $fileName);
 $fileActualExt = strtolower(end($fileExt));
 
-$allowed = array('jpg','jpeg', 'png', 'pdf');
+$allowed = array('jpg','jpeg', 'png');
 
 if (in_array($fileActualExt, $allowed)) {
     if ($fileError === 0) {
@@ -45,13 +45,13 @@ if (in_array($fileActualExt, $allowed)) {
 
             header("Location: admin.php?uploadsuccess");
         } else{
-            echo "your file is to big!";
+            echo "Filen är för stor!";
         }
     } else{
-        echo "There was an error uploading you file!";
+        echo "Något gick fel!";
     }
 } else{
-    echo "you cannot upload file of that type! make sure it is a .jpg , .jpeg , .png or a .pdf ";
+    echo "Du kan inte ladda upp en fil av den typen, endast .jpg , .jpeg eller .png är tillåtna!";
 }
 
 }

@@ -10,10 +10,12 @@
                 $password = "onlyread";
                 
 
-                $mysqlicon = new mysqli($servername, "readonly@v187679", $password, "vasterasvaggdekor_se_db_2");
+                $mysqlitext = new mysqli($servername, "readonly@v187679", $password, "vasterasvaggdekor_se_db_2");
                 $mysqliprojekt = new mysqli($servername, "readonly@v187678", $password, "vasterasvaggdekor_se_db_1");
-                mysqli_set_charset($mysqlicon, 'utf8');
+             
+                mysqli_set_charset($mysqlitext, 'utf8');
                 mysqli_set_charset($mysqliprojekt, 'utf8');
+                
 ?>
 <head>
 
@@ -113,10 +115,11 @@
                 <h3>Välkommen till Västerås Väggdekor</h3>
 
                 <h1>
-                    Vi är ett företag baserat <br>
-                    i Västerås som arbetar med <br>
-                    olika typer av väggmålningar.
-                   
+                    <?php             
+             
+                    $gettext = mysqli_fetch_assoc(mysqli_query($mysqlitext, "SELECT textvalue FROM textinfo WHERE id = 'welcometext'"));
+                    echo nl2br($gettext['textvalue']);  
+                    ?>                   
                 </h1>
 
                 <div class="home-content__buttons">
@@ -166,17 +169,10 @@
 
         <div class="row about-desc" data-aos="fade-up">
             <div class="col-full">              
-                <?php              
-             try{
-                $query = "SELECT * FROM textinfo WHERE id = 'omoss'";
-                $result = $mysqlicon->query($query);                
-                while($row = $result->fetch_assoc()) {  
-                 echo nl2br($row["textvalue"]);
-                }
-            }
-            catch(PDOException $e){
-                echo "Connection Falied: ".$e ->getMessage();
-            }
+                <?php             
+             
+                $gettext = mysqli_fetch_assoc(mysqli_query($mysqlitext, "SELECT textvalue FROM textinfo WHERE id = 'omoss'"));
+                echo nl2br($gettext['textvalue']);  
 
                 ?>
                 <br>
@@ -355,30 +351,51 @@
                 <div class="contact-info">
 
                     <h3 class="h6 hide-on-fullwidth">Kontaktinformation</h3>
+                    <?php
+                    
+                    $gettext = mysqli_fetch_assoc(mysqli_query($mysqlitext, "SELECT textvalue FROM textinfo WHERE id = 'address'"));
+                    $address = $gettext['textvalue'];
 
-                    <div class="cinfo">
+                    $gettext = mysqli_fetch_assoc(mysqli_query($mysqlitext, "SELECT textvalue FROM textinfo WHERE id = 'email1'"));
+                    $email1 = $gettext['textvalue'];
+
+                    $gettext = mysqli_fetch_assoc(mysqli_query($mysqlitext, "SELECT textvalue FROM textinfo WHERE id = 'email2'"));
+                    $email2 = $gettext['textvalue'];
+
+                    $gettext = mysqli_fetch_assoc(mysqli_query($mysqlitext, "SELECT textvalue FROM textinfo WHERE id = 'postkod'"));
+                    $postkod = $gettext['textvalue'];
+
+                    $gettext = mysqli_fetch_assoc(mysqli_query($mysqlitext, "SELECT textvalue FROM textinfo WHERE id = 'tel'"));
+                    $tel = $gettext['textvalue'];
+
+                    mysqli_close($mysqlitext);
+                        
+
+
+                    echo 
+                    '<div class="cinfo">
                         <h5>Vart du kan hitta oss</h5>
-                        <p>
-                            Address<br>                            
-                            Postkod
+                        <p>                            
+                            '.$address.'<br>                            
+                            '.$postkod.'
                         </p>
                     </div>
 
                     <div class="cinfo">
                         <h5>Email</h5>
                         <p>
-                            kontakt@vasterasvaggdekor.se<br>
-                            info@vasterasvaggdekor.se
+                            '.$email1.'<br>
+                            '.$email2.'
                         </p>
                     </div>
 
                     <div class="cinfo">
                         <h5>Telefon</h5>
                         <p>
-                            Nummer: 021 00 00 000<br>                        
+                            Nummer: '.$tel.'<br>                        
                         </p>
-                    </div>
-
+                    </div>';
+                    ?>
                     <ul class="contact-social">
                         <li>
                             <a href="https://www.facebook.com/V%C3%A4ster%C3%A5s-V%C3%A4ggdekor-1605809676128925/"><i class="fa fa-facebook" aria-hidden="true"></i></a>

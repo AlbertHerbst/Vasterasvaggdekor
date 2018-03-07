@@ -853,7 +853,7 @@ input[type="reset"].btn--primary,
 input[type="button"].btn--primary {
     background: <?php echo $maincolor;?>;
     border-color: <?php echo $maincolor;?>;
-    color: #FFFFFF;
+    color: black;
 }
 
 .btn.btn--primary:hover,
@@ -866,8 +866,8 @@ button.btn--primary:focus,
 input[type="submit"].btn--primary:focus,
 input[type="reset"].btn--primary:focus,
 input[type="button"].btn--primary:focus {
-    background: #33a242;
-    border-color: #33a242;
+    background: #ffb187;
+    border-color: #ffb187;
 }
 
 
@@ -897,7 +897,8 @@ input[type="button"].btn--primary:focus {
 
 .btn--stroke:hover, button.btn--stroke:hover {
     border: 0.2rem solid <?php echo $buttoncolorhover;?>;
-    color: <?php echo $buttoncolorhover;?>;
+   
+    color: black;
 }
 
 .btn--pill, button.btn--pill {

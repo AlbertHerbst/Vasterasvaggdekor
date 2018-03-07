@@ -1,6 +1,7 @@
 <?php
 include_once '../private/includes/db_connect.php';
 include_once '../private/includes/functions.php';
+include 'update.php';
 
 sec_session_start();
 ?>
@@ -27,10 +28,11 @@ sec_session_start();
 
     <!-- CSS
     ================================================== -->
-    <link rel="stylesheet" href="css/admin.css">
+    
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/vendor.css">
     <link rel="stylesheet" href="css/main.php">
+    <link rel="stylesheet" href="css/admin.css">
     
 
     <!-- script
@@ -47,50 +49,78 @@ sec_session_start();
 
 <body>
      <?php if (login_check($mysqli) == true) : ?>
-        <?php $mysqlitext = new mysqli("mysql690.loopia.se", "readonly@v187679", "onlyread", "vasterasvaggdekor_se_db_2");
-$mysqliprojekt = new mysqli("mysql690.loopia.se", "projadmi@v187678", "rndmprojadmi", "vasterasvaggdekor_se_db_1");
-$colorcon = mysqli_connect("mysql690.loopia.se", "readonly@v187722", "onlyread", "vasterasvaggdekor_se_db_4");  
-mysqli_set_charset($mysqlitext, 'utf8');
-mysqli_set_charset($mysqliprojekt, 'utf8');
-mysqli_set_charset($colorcon, 'utf8');
+        <?php 
+        $mysqlitext = new mysqli("mysql690.loopia.se", "readonly@v187679", "onlyread", "vasterasvaggdekor_se_db_2");
 
-$getcolor = mysqli_fetch_assoc(mysqli_query($colorcon, "SELECT hex FROM colors WHERE id = 'maincolor'"));
-$maincolor = $getcolor['hex'];
+        $mysqliprojekt = new mysqli("mysql690.loopia.se", "projadmi@v187678", "rndmprojadmi", "vasterasvaggdekor_se_db_1");
 
-$getcolor2 = mysqli_fetch_assoc(mysqli_query($colorcon, "SELECT hex FROM colors WHERE id = 'buttoncolorhover'"));
-$buttoncolorhover = $getcolor2['hex'];
+        $colorcon = mysqli_connect("mysql690.loopia.se", "readonly@v187722", "onlyread", "vasterasvaggdekor_se_db_4");  
+        mysqli_set_charset($mysqlitext, 'utf8');
+        mysqli_set_charset($mysqliprojekt, 'utf8');
+        mysqli_set_charset($colorcon, 'utf8');
 
-$getcolor3 = mysqli_fetch_assoc(mysqli_query($colorcon, "SELECT hex FROM colors WHERE id = 'omossbakgrund'"));
-$omossbakgrund = $getcolor3['hex'];
+        $getcolor = mysqli_fetch_assoc(mysqli_query($colorcon, "SELECT hex FROM colors WHERE id = 'maincolor'"));
+        $maincolor = $getcolor['hex'];
+
+        $getcolor2 = mysqli_fetch_assoc(mysqli_query($colorcon, "SELECT hex FROM colors WHERE id = 'buttoncolorhover'"));
+        $buttoncolorhover = $getcolor2['hex'];
+
+        $getcolor3 = mysqli_fetch_assoc(mysqli_query($colorcon, "SELECT hex FROM colors WHERE id = 'omossbakgrund'"));
+        $omossbakgrund = $getcolor3['hex'];
 
 
 
 
 mysqli_close($colorcon);
 ?>
-    <!-- header
+    <a class="btn btn--primary" href="includes/logout.php">Logga Ut</a>
+    <a id="defaultOpen" class="tablink btn" onclick="openPage('works', this)">Projekt</a>
+    <a class="tablink btn" onclick="openPage('Start', this)">Start</a>
+    <a class="btn tablink" onclick="openPage('About', this)">Om Oss</a>
+    <a class="btn tablink" onclick="openPage('AddProject', this)">Lägg Till Projekt</a>
+    <a class="btn tablink" onclick="openPage('Colors', this)">Färger</a>
+    <a class="btn tablink" onclick="openPage('ContactInfo', this)">Kontaktinformation</a>
+
+            
+             
+                     
+
+<div id="Start" class="tabcontent">
+
+    <div class="admincontent row">
+         <div class="col-six tab-full">
+                <form method="POST" action="admin.php">
+                <textarea name="welcometext" class="full-width"><?php
+                    $gettext = mysqli_fetch_assoc(mysqli_query($mysqlitext, "SELECT textvalue FROM textinfo WHERE id = 'welcometext'"));
+                    echo $gettext['textvalue'];  
+                    ?></textarea>
+                    <label>Bakgrund på startsidan</label>
+                    <input type="file" name="startbakgrund">
+                    <label>Logotypen:</label>
+                    <input type="file" name="logo">
+                <input type="submit" name="submitwelcometext">
+
+
+            </form>
+         </div>    
+        
+
+    </div>
 
    
-    ================================================== 
-    BAKGRUNDSBILD = data-image-src
-    -->
-    <section >
-    <div class="row">
-        <div class="col-six tab-full">
-            <form method="post" action="update.php">
+
+</div>
+   
+<div id="About" class="tabcontent">
+
+        <div class="admincontent row">
+            <form method="post" action="admin.php">
            
                             <h3>Om Oss</h3>
                             <textarea name="omoss" class="full-width" type="text" id="desc"><?php     
-                            
-                               
-                                $query = "SELECT * FROM textinfo WHERE id = 'omoss'";
-                                $result = $mysqlitext->query($query);                
-                                while($row = $result->fetch_assoc()) {  
-                                 echo $row["textvalue"];
-                                }
-                            
-                            
-                            ?></textarea>
+                                $gettext = mysqli_fetch_assoc(mysqli_query($mysqlitext, "SELECT textvalue FROM textinfo WHERE id = 'omoss'"));
+                                echo $gettext['textvalue'];                              
+                                ?></textarea>
 
                            
                                 <?php
@@ -113,31 +143,36 @@ mysqli_close($colorcon);
                                 </script>                      
                            
 
-            <input type="submit" name="submitdesc" value="Spara">
+            <input type="submit" name="submitabout" value="Spara">
         </form>
 
-        </div>
-        <div class="col-six tab-full">               
+        </div>      
+ 
+</div>
 
-                <form action="upload.php" method="POST" enctype="multipart/form-data">
+<div id="AddProject" class="tabcontent">
+   <div class="admincontent row">               
+
+                <form action="admin.php" method="POST" enctype="multipart/form-data">
                     <h3>Lägg Till Projekt</h3>
                     <label>Rubrik</label>
                     <input type="text" class="full-width" name="rubrik" placeholder="Rubrik..">
                     <input type="text" class="full-width" name="korttext" placeholder="Kort beskrivning..">
                     <textarea class="full-width" name="huvudtext" placeholder="Den här texten syns när användaren klickar på bilden.."></textarea>
-                    <label>Välj Projektbild</label>                
-                    <input type="file" name="file">
-                    <button type="submit" name="submit"> Ladda Upp </button>
+                    <label>Välj Projektbild</label>
+                    <p>Filer över 1MB komprimeras!</p>                
+                    <input type="file" name="projectimage">
+                    <button type="submit" name="submitproject"> Ladda Upp </button>
                 </form>
 
             </div>
-        
-    </div> <!--end row-->
+            
+</div>
 
-    <div class="row">
-        <div class="col-six tab-full">
+<div id="Colors" class="tabcontent">
+  <div class="admincontent row">
             <h3>Färger</h3>
-            <form method="POST" action="updatecolor.php">
+            <form method="POST" action="admin.php">
                 
                 
                
@@ -181,21 +216,78 @@ mysqli_close($colorcon);
             </script>
 
 
-                <button type="submit"> Spara Färger </button>
+                <input type="submit" name="submitcolors" value="Spara Färger">
             </form>
             
         </div>
+</div>
 
-    </div> <!--end row-->
-     
+<div id="ContactInfo" class="tabcontent">
+   <div class="admincontent row">
 
 
+                <?php 
+                $gettext = mysqli_fetch_assoc(mysqli_query($mysqlitext, "SELECT textvalue FROM textinfo WHERE id = 'address'"));
+                $address = $gettext['textvalue'];
 
-<form action="../private/includes/logout.php">
-       <button type="submit">Logga Ut</button>
-   </form>
- </section>
- <section id='works' class="s-works">
+                $gettext = mysqli_fetch_assoc(mysqli_query($mysqlitext, "SELECT textvalue FROM textinfo WHERE id = 'email1'"));
+                $email1 = $gettext['textvalue'];
+
+                $gettext = mysqli_fetch_assoc(mysqli_query($mysqlitext, "SELECT textvalue FROM textinfo WHERE id = 'email2'"));
+                $email2 = $gettext['textvalue'];
+
+                $gettext = mysqli_fetch_assoc(mysqli_query($mysqlitext, "SELECT textvalue FROM textinfo WHERE id = 'postkod'"));
+                $postkod = $gettext['textvalue'];
+
+                $gettext = mysqli_fetch_assoc(mysqli_query($mysqlitext, "SELECT textvalue FROM textinfo WHERE id = 'tel'"));
+                $tel = $gettext['textvalue'];
+
+                mysqli_close($mysqlitext);
+                ?>
+            <h3>Kontaktinformation</h3>
+
+            <form method="POST" action="admin.php">
+
+                <div class="col-six tab-full">
+                    <?php 
+                    echo '
+                <label>Address</label>
+                <input class="full-width" type="text" name="address" value="'.$address.'">
+                <div class="col-six">
+                    <label>Postkod</label>
+                    <input class="full-width" type="text" name="postkod" value="'.$postkod.'">                    
+                </div>
+                <div class="col-six">
+                    <label>Telefon</label>
+                    <input class="full-width" type="text" name="tel" value="'.$tel.'">
+                </div>
+                ';
+                ?>
+
+                </div>
+
+                <div class="col-six tab-full">
+                    <?php
+                        echo '
+                        <label>Email 1</label>
+                        <input class="full-width" type="text" name="email1" value="'.$email1.'">
+
+                        <label>Email 2</label>
+                        <input class="full-width" type="text" name="email2" value="'.$email2.'">';
+                    ?>
+                    
+                </div>
+
+                <input type="submit" name="submitcontact" value="SPARA">
+
+            </form>
+
+
+        </div>
+</div>
+
+
+  <section id='works' class="s-works tabcontent">
 
         <div class="intro-wrap">
                 
@@ -255,6 +347,27 @@ mysqli_close($colorcon);
 
     </section> <!-- end s-works -->
 
+<script>
+function openPage(pageName,elmnt) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablink");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].style.backgroundColor = "";
+        tablinks[i].style.borderColor = "";
+    }
+    document.getElementById(pageName).style.display = "block";
+    elmnt.style.backgroundColor = "grey";
+    elmnt.style.borderColor = "grey";
+
+}
+// Get the element with id="defaultOpen" and click on it
+document.getElementById("defaultOpen").click();
+</script>
+  
 
      <!-- photoswipe background
     ================================================== -->
