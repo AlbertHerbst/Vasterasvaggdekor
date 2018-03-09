@@ -55,7 +55,7 @@
     <header class="s-header">
 
         <div class="header-logo">
-            <a class="site-logo" href="index.html">
+            <a class="site-logo" href="">
                 <img src="images/logga_liten.png" alt="Homepage">
             </a>
         </div>
@@ -76,7 +76,7 @@
                     <li><a class="smoothscroll"  href="#contact" title="contact">Kontakt</a></li>
                 </ul>
     
-                <p>Perspiciatis hic praesentium nesciunt. Et neque a dolorum <a href='#0'>voluptatem</a> porro iusto sequi veritatis libero enim. Iusto id suscipit veritatis neque reprehenderit.</p>
+                
     
                 <ul class="header-nav__social">
                     <li>

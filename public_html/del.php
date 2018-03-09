@@ -17,12 +17,13 @@ $id = $_POST['id'];
 
 $getid = mysqli_fetch_assoc(mysqli_query($mysqlitext, "SELECT 'imgpath' FROM 'projekt' WHERE 'id' = '$id'"));
 $imgpath = $getid['imgpath'];
+echo $imgpath;
 
-unlink($imgpath);
+unlink('uploads/5aa241b367297041996159.jpg');
 
 $query = "DELETE FROM `projekt` WHERE `id` = $id";
 $mysqlitext->query($query);
-header("Location: admin.php");
+//header("Location: admin.php");
 }
 ?>
 <?php else : ?>        
